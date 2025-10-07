@@ -1,0 +1,135 @@
+<mvc:View
+    controllerName="fatturazione.elettronica.passiva.controller.Dettaglio"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:m="sap.m"
+>
+    <m:Page title="Dettaglio Fattura">
+        <m:content>
+            <m:ScrollContainer
+                horizontal="true"
+                vertical="false"
+                width="100%"
+                focusable="true"
+            >
+            <m:OverflowToolbar>
+                <!-- Torna alla Home -->
+                <m:Button
+                    text="Torna alla Home"
+                    icon="sap-icon://nav-back"
+                    press=".onBackToHome"
+                    type="Transparent"
+                />
+
+                <m:ToolbarSeparator/>
+
+                <!-- Attribuisci Oda -->
+                <m:Button
+                    text="Attribuisci Oda"
+                    icon="sap-icon://attachment"
+                    press=".onAttribuisciOda"
+                    type="Emphasized"
+                />
+
+                <!-- Attribuisci DDT -->
+                <m:Button
+                    text="Attribuisci DDT"
+                    icon="sap-icon://chain-link"
+                    press=".onAttribuisciDDT"
+                    type="Emphasized"
+                />
+
+                <!-- PreAcquisire (Qta e Prz da file) -->
+                <m:Button
+                    text="PreAcquisire (Qta e Prz da file)"
+                    icon="sap-icon://warning"
+                    type="Emphasized"
+                    press=".onPreAcquisireFile"
+                />
+
+                <!-- PreAcquisire dati da Oda Sap -->
+                <m:Button
+                    text="PreAcquisire dati da Oda Sap"
+                    icon="sap-icon://download"
+                    press=".onPreAcquisireOdaSap"
+                    type="Emphasized"
+                />
+
+                <!-- PreAcquisire dati da DDT Sap -->
+                <m:Button
+                    text="PreAcquisire dati da DDT Sap"
+                    icon="sap-icon://download"
+                    press=".onPreAcquisireDdtSap"
+                    type="Emphasized"
+                />
+            </m:OverflowToolbar>
+            <m:Table
+                id="detailTable"
+
+                items="{/SelectedInvoice/items}"
+                inset="false"
+                width="100%"
+            >
+                <m:columns>
+                    <m:Column width="6rem"><m:Text text="Tipo doc."/></m:Column>
+                    <m:Column width="6rem"><m:Text text="DscTpDoc"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Soc."/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Fornitore"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Nome 1"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Riferimento"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Data"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Divisa"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Importo"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Posizione"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="M.For/CCAC"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Cod.Mat."/></m:Column>
+                    <m:Column width="7rem"><m:Text text="Descr.Materiale"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Unità"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Quantità"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="PrzUnità"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Sc/Mag"/></m:Column>
+                    <m:Column width="8rem"><m:Text text="Prezzo Totale"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Cod. IVA"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="OdA"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Doc. acq."/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Posizione"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Data doc."/></m:Column>
+                    <m:Column width="6rem"><m:Text text="DDT"/></m:Column>
+                    <m:Column width="6rem"><m:Text text="Doc."/></m:Column>
+                </m:columns>
+
+                <m:items>
+                    <m:ColumnListItem>
+                        <m:cells>
+                            <m:Text text="{= ${docType} || 'TD01'}"/>
+                            <m:Text text="{= ${docDesc} || 'Fattura'}"/>
+                            <m:Text text="{= ${company} || 'S100'}"/>
+                            <m:Text text="{= ${supplier} || ''}"/>
+                            <m:Text text="{= ${supplierName} || ''}"/>
+                            <m:Text text="{reference}"/>
+                            <m:Text text="{= ${date} || ''}"/>
+                            <m:Text text="{= ${currency} || 'EUR'}"/>
+                            <m:Text text="{totalPrice}"/>
+                            <m:Text text="{line}"/>
+                            <m:Text text="{materialCode}"/>
+                            <m:Text text="{materialCode}"/>
+                            <m:Text text="{materialDesc}"/>
+                            <m:Text text="{= ${unit} || 'Conf.'}"/>
+                            <m:Text text="{quantity}"/>
+                            <m:Text text="{unitPrice}"/>
+                            <m:Text text="{= ${discount} || ''}"/>
+                            <m:Text text="{totalPrice}"/>
+                            <m:Text text="{vatCode}"/>
+                            <m:Text text="{= ${oda} || ''}"/>
+                            <m:Text text="{= ${docAcq} || ''}"/>
+                            <m:Text text="{line}"/>
+                            <m:Text text="{= ${docDate} || ''}"/>
+                            <m:Text text="{= ${ddt} || ''}"/>
+                            <m:Text text="{= ${doc} || ''}"/>
+                        </m:cells>
+                    </m:ColumnListItem>
+                </m:items>
+            </m:Table>
+            </m:ScrollContainer>
+        </m:content>
+    </m:Page>
+</mvc:View>
