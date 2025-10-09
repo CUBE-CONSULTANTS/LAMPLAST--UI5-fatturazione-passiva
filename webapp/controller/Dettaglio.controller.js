@@ -34,6 +34,26 @@ sap.ui.define([
             this.getView().bindElement({
                 path: "/SelectedInvoice"
             });
+
+            this._updateTotal();
+        },
+
+        _updateTotal: function () {
+            const oModel = this.getView().getModel();
+            const aItems = oModel.getProperty("/SelectedInvoice/items") || [];
+
+            const fTotale = aItems.reduce((sum, item) => {
+                const val = parseFloat(item.totalPrice?.toString().replace(",", ".")) || 0;
+                return sum + val;
+            }, 0);
+
+            oModel.setProperty("/SelectedInvoice/totalSum", fTotale);
+        },
+
+
+        formatCurrency: function (v) {
+            return new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR" })
+                .format(Number(v) || 0);
         },
 
 

@@ -158,40 +158,65 @@ sap.ui.define([
 
 
 
-        onVisualizzaDati: function () {
-            var oTable = this.byId("idTreeTable");
-            var aSelected = oTable.getSelectedIndices();
+        onVisualizzaDati: function (oEvent) {
+            // var oTable = this.byId("idTreeTable");
+            // var aSelected = oTable.getSelectedIndices();
 
-            if (aSelected.length === 0) {
-                sap.m.MessageToast.show("Seleziona una fattura per visualizzare i dettagli.");
-                return;
-            }
+            // if (aSelected.length === 0) {
+            //     sap.m.MessageToast.show("Seleziona una fattura per visualizzare i dettagli.");
+            //     return;
+            // }
 
-            if (aSelected.length > 1) {
-                sap.m.MessageBox.warning("Puoi visualizzare i dati di una sola fattura alla volta.");
-                return;
-            }
-
-
-            var oContext = oTable.getContextByIndex(aSelected[0]);
-            var oSelected = oContext.getObject();
+            // if (aSelected.length > 1) {
+            //     sap.m.MessageBox.warning("Puoi visualizzare i dati di una sola fattura alla volta.");
+            //     return;
+            // }
 
 
+            // var oContext = oTable.getContextByIndex(aSelected[0]);
+            // var oSelected = oContext.getObject();
+
+
+            // if (!oSelected.items) {
+            //     sap.m.MessageToast.show("Puoi visualizzare i dati solo delle fatture principali.");
+            //     return;
+            // }
+
+
+            // var oGlobalModel = new sap.ui.model.json.JSONModel({
+            //     SelectedInvoice: oSelected
+            // });
+            // sap.ui.getCore().setModel(oGlobalModel, "SelectedInvoiceModel");
+
+
+            // var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            // oRouter.navTo("Dettaglio", {
+            //     invoiceId: oSelected.docNumber
+            // });
+
+            const oContext = oEvent.getSource().getParent().getBindingContext();
+            const oSelected = oContext.getObject();
+            const oModel = oContext.getModel();
+
+            // 🔹 Risali al padre se la riga è un figlio
+            let oParent = oSelected;
             if (!oSelected.items) {
-                sap.m.MessageToast.show("Puoi visualizzare i dati solo delle fatture principali.");
-                return;
+                const aInvoices = oModel.getProperty("/Invoices");
+                oParent = aInvoices.find(inv =>
+                    inv.items?.some(item => item.docNumber === oSelected.docNumber)
+                ) || oSelected; // fallback in caso di anomalia
             }
 
-
-            var oGlobalModel = new sap.ui.model.json.JSONModel({
-                SelectedInvoice: oSelected
+            // 🔹 Imposta il modello globale come in onVisualizzaDati
+            const oGlobalModel = new sap.ui.model.json.JSONModel({
+                SelectedInvoice: oParent
             });
             sap.ui.getCore().setModel(oGlobalModel, "SelectedInvoiceModel");
 
-
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            // 🔹 Navigazione verso la pagina di dettaglio
+            const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.navTo("Dettaglio", {
-                invoiceId: oSelected.docNumber
+                invoiceId: oParent.docNumber
             });
         }
 

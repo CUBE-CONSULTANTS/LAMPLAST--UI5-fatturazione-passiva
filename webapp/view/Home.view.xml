@@ -38,8 +38,20 @@
                 selectionMode="MultiToggle"
                 enableColumnReordering="true"
                 fixedColumnCount="1"
-               
+                rowActionCount="1"
             >
+<table:rowActionTemplate>
+    <table:RowAction>
+        <table:items>
+            <table:RowActionItem
+                icon="sap-icon://navigation-right-arrow"
+                text="Apri Dettaglio"
+                type="Navigation"
+                press=".onVisualizzaDati"
+            />
+        </table:items>
+    </table:RowAction>
+</table:rowActionTemplate>
                 <table:extension>
                     <m:OverflowToolbar>
                         <!-- 1. OdA senza fattura -->
@@ -51,12 +63,12 @@
                         />
 
                         <!-- 2. Visualizza Dati -->
-                        <m:Button
+                        <!-- <m:Button
                             text="Visualizza Dati"
                             icon="sap-icon://inspect"
                             press=".onVisualizzaDati"
                             type="Emphasized"
-                        />
+                        /> -->
 
                         <!-- 3. Partitario Fornitore -->
                         <m:Button
